@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $p := .Params }}
+<div class="grid lg:grid-cols-2 gap-4">
+	<div class="not-prose flex cursor-default flex-col space-y-4 rounded-lg border border-white p-4">
+		<img src="{{ or $p.portraitImage "/portrait.png" }}" alt="Portrait" class="w-[192px] h-[192px]">
+		<div>
+			{{ with $p.introTitle }}<strong>{{ . }}</strong>{{ end }}
+			{{ with $p.introBody }}{{ . | markdownify }}{{ end }}
+		</div>
+		<div>
+			{{ with $p.introBody2 }}{{ . | markdownify }}{{ end }}
+		</div>
+	</div>
+	<div class="grid lg:grid-rows-2 gap-4">
+		<div class="not-prose flex cursor-default flex-col space-y-2 rounded-lg border border-white p-6">
+			{{ with $p.statusTitle }}<strong>{{ . }}</strong>{{ end }}
+			{{ with $p.statusText }}<div>{{ . | markdownify }}</div>{{ end }}
+		</div>
+		<div class="not-prose flex cursor-default flex-col space-y-2 rounded-lg border border-white p-6">
+			{{ with $p.linksTitle }}<strong>{{ . }}</strong>{{ end }}
+			{{ if $p.itchUrl }}
+				<p class="underline">
+					<a href="{{ $p.itchUrl }}"> itch.io </a>
+				</p>
+				<p class="underline">
+					<a href="{{ $p.githubUrl }}"> github.com </a>
+				</p>
+			{{ end }}
+		</div>
+	</div>
+</div>
+{{ .Content }}
+{{ end }}
